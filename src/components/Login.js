@@ -1,9 +1,16 @@
 import React from 'react';
-import { Button, Form, Input, Layout } from 'element-react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux'
-import 'element-theme-default';
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class Login extends React.Component{
+  static defaultProps = {
+    center: {
+      lat: 23.8103,
+      lng: 90.4125
+    },
+    zoom: 11
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -11,91 +18,26 @@ class Login extends React.Component{
         userName: '',
         password: ''
       },
-      rules: {
-        userName: [
-          { required: true, message: 'Please input the User name', trigger: 'blur' },
-          { validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error('Please input the User name'));
-            } else {
-              // if (this.state.form.checkPass !== '') {
-              //   this.refs.form.validateField('checkPass');
-              // }
-              callback();
-            }
-          } }
-        ],
-        password: [
-          { required: true, message: 'Please input the Password', trigger: 'blur' },
-          { validator: (rule, value, callback) => {
-              if (value === '') {
-                callback(new Error('Please input the Password'));
-              } else {
-                callback();
-              }
-            }
-          }
-        ]
-      }
     };
   }
   componentWillMount () {
     document.title = "Login";
   }
   
-  handleSubmit(e) {
-    e.preventDefault();
-  
-    this.refs.form.validate((valid) => {
-      if (valid) {
-        let token = this.state.form.userName;
-        console.log(token)
-        this.props.login(token);
-        this.props.history.push("/home");
-      } else {
-        console.log('error submit!!');
-        return false;
-      }
-    });
-  }
-  
-  handleReset(e) {
-    e.preventDefault();
-  
-    this.refs.form.resetFields();
-  }
-  
-  onChange(key, value) {
-    this.setState({
-      form: Object.assign({}, this.state.form, { [key]: value })
-    });
-  }
-  
   render() {
     return (
-      <div>
-        <Layout.Row>
-          <Layout.Col offset="9">
-            <div className="grid-content bg-purple">
-              <img style={{width: '100px', height: '100px'}} src={require('../logo.png')} />
-            </div>
-          </Layout.Col>
-        </Layout.Row>
-        <Layout.Row>
-          <Layout.Col  offset="5" span="11">
-            <Form ref="form" label-position="top" model={this.state.form} rules={this.state.rules} labelWidth="100" className="demo-ruleForm">
-              <Form.Item label="User name" prop="userName">
-                <Input type="text" value={this.state.form.userName} onChange={this.onChange.bind(this, 'userName')} autoComplete="off" />
-              </Form.Item>
-              <Form.Item label="Password" prop="password">
-                <Input type="password" value={this.state.form.password} onChange={this.onChange.bind(this, 'password')} autoComplete="off" />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" onClick={this.handleSubmit.bind(this)}>Login{this.props.isLoggedIn}</Button>
-              </Form.Item>
-            </Form>
-          </Layout.Col>
-        </Layout.Row>
+     <div style={{ height: '100vh', width: '100%' }}>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: "AIzaSyAyIvCIJ8K57oZ0Hra-TPJWOAP8gjiJ7E8" }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+        >
+          <AnyReactComponent
+            lat={59.955413}
+            lng={30.337844}
+            text={'Kreyser Avrora'}
+          />
+        </GoogleMapReact>
       </div>
     )
   }
