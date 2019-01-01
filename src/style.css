@@ -1,80 +1,57 @@
-.redClass {
-    background: red;
-    border-radius: 8px;
-    color: white;
+
+  .controls {
+    z-index: 100;
+    margin-top: 16px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 38px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
-  .orderFirst .el-radio-button--large .el-radio-button__inner{
-    padding: 20% 30%!important;
-    font-size: 28px !important;
-    width: 100%!important
+  .pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+    position: absolute;
+    top: -5px;
+    z-index: 1;
+    left: 15%;
   }
-  .orderSecond .el-radio-button--large .el-radio-button__inner{
-    padding: 20% 12%!important;
-    font-size: 1.3rem !important;
-    width: 100%!important;
-    margin-top: 1%
+
+  .pac-input:focus {
+    border-color: #4d90fe;
   }
-  .el-radio-button--large .el-radio-button__inner{
-    padding: 20% 30%!important;
-    font-size: 28px !important
+
+  .pac-container {
+    font-family: Roboto;
   }
-  .el-radio-group {
-      width: 100%!important
+
+  .type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
   }
-  .homeScreen .el-radio-button {
-      width: 50%!important
+
+  .type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
   }
-  .orderFirst .el-radio-button {
-      width: 24%!important
-  }
-  .el-radio-button__inner{
-      border: 1px solid #bfcbd9!important
-  }
-  .el-input{
-    height: 70px!important
-  }
-  .home-screen .el-input__inner {
-      height: 70px!important;
-      font-size: 28px!important
-  }
-  .orderSecond .el-radio-button {
-      display: list-item;
-  }
-  .el-radio-button__inner {
-      width: 100%
-  }
-  .el-checkbox-button, .el-checkbox-button__inner {
-      width: 100%
-  }
-  .el-checkbox-button--large .el-checkbox-button__inner{
-    padding: 20% 12%!important;
-    font-size: 1.3rem!important;
-    margin-top: 1%
-  }
-  .css-sourceMap-modules-importLoaders-1-localIdentName-ReactDrawer__drawer___2r5VH-sass {
-      background-color: #ffffff!important
-  }
-  .panel-heading, .panel-tabs, .panel-block {
-      border-right: none!important
-  }
-  .blue-background {
-      background-color: #20a0ff
-  }
-  .panel-block {
-      color: #20a0ff!important;
-      font-weight: bold;
-      text-transform: capitalize
-  }
-  .el-icon-close {
-    color: #20a0ff!important;
-  }
-  .custom-large {
-      width: 200px!important;
-      height: 80px!important;
-      font-weight: bold;
-      text-transform: uppercase
-  }
-  .space-btween {
-      justify-content: space-between
+  .map-canvas {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
   }
   

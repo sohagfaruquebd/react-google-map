@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux'
 import SearchBox from './SearchBox';
+import '../style.css'
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class Login extends React.Component{
   static defaultProps = {
@@ -45,10 +46,10 @@ class Login extends React.Component{
       places, mapApiLoaded, mapInstance, mapApi,
     } = this.state;
     return (
-      <div>
+      <div className="map-canvas">
        
-      {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
-      <div style={{ height: 100, position: "absolute", width: '100%' }}>
+      
+      {/* <div style={{ height: '100vh', width: '100%' }}>
         <GoogleMapReact
         bootstrapURLKeys={{
             key: "AIzaSyAyIvCIJ8K57oZ0Hra-TPJWOAP8gjiJ7E8",
@@ -67,7 +68,26 @@ class Login extends React.Component{
           />
         </GoogleMapReact>
       </div>
-        
+         */}
+
+        <GoogleMapReact
+        bootstrapURLKeys={{
+            key: "AIzaSyAyIvCIJ8K57oZ0Hra-TPJWOAP8gjiJ7E8",
+            libraries: ['places', 'geometry'],
+          }}
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}
+          options={this.createMapOptions()}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
+        >
+          <AnyReactComponent
+            lat={59.955413}
+            lng={30.337844}
+            text={'Kreyser Avrora'}
+          />
+        </GoogleMapReact>
+        {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
       </div>
     
     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../style.css'
 class SearchBox extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +44,7 @@ class SearchBox extends Component {
           type="text"
           onFocus={this.clearSearchBox}
           placeholder="Enter a location"
+          className="controls pac-input"
         />
       
     );
