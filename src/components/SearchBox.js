@@ -8,6 +8,8 @@ class SearchBox extends Component {
 
   componentDidMount({ map, mapApi } = this.props) {
     this.searchBox = new mapApi.places.SearchBox(this.searchInput);
+    console.log("searchbox", this.searchBox)
+   
     this.searchBox.addListener('places_changed', this.onPlacesChanged);
     this.searchBox.bindTo('bounds', map);
   }
@@ -25,8 +27,8 @@ class SearchBox extends Component {
     } else {
       map.setCenter(place.geometry.location);
       map.setZoom(17);
+      
     }
-
     addplace(selected);
     this.searchInput.blur();
   };

@@ -26,15 +26,34 @@ class Login extends React.Component{
     document.title = "Home";
   }
   handleApiLoaded = (map, maps) => {
+    console.log(maps)
     this.setState({
       mapApiLoaded: true,
       mapInstance: map,
       mapApi: maps,
+      parkData: []
     });
   };
-  addPlace = (place) => {
+  addPlace = async(place) => {
+    console.log(place[0].geometry.location.lat())
+    var service = new this.state.mapApi.places.PlacesService(this.state.mapInstance);
+    const pResult = await service.nearbySearch({
+      location: {lat: place[0].geometry.location.lat(), lng:  place[0].geometry.location.lng()},
+      radius: 1000,
+      type: ['parking']
+    }, (results, status) => {
+      for (var i = 0; i < results.length; i++) {
+        // createMarker(results[i]);
+        new this.state.mapApi.Marker({
+          map: this.state.mapInstance,
+          position: results[i].geometry.location
+        });
+      }
+    });
+    console.log(this.state)
     this.setState({ places: place });
   };
+  
   createMapOptions = (maps) => {
     return {
       mapTypeControl: true,
@@ -48,27 +67,6 @@ class Login extends React.Component{
     return (
       <div className="map-canvas">
        
-      
-      {/* <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-        bootstrapURLKeys={{
-            key: "AIzaSyAyIvCIJ8K57oZ0Hra-TPJWOAP8gjiJ7E8",
-            libraries: ['places', 'geometry'],
-          }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-          options={this.createMapOptions()}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
-        >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text={'Kreyser Avrora'}
-          />
-        </GoogleMapReact>
-      </div>
-         */}
 
         <GoogleMapReact
         bootstrapURLKeys={{
