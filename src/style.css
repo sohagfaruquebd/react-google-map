@@ -18,11 +18,11 @@
     margin-left: 12px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
-    width: 400px;
+    width: 12rem;
     position: absolute;
-    top: -5px;
+    top: 3rem;
     z-index: 1;
-    left: 15%;
+    left: 0%;
   }
 
   .pac-input:focus {
