@@ -16,6 +16,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isActiveModal: false,
       mapApiLoaded: false,
       mapInstance: null,
       mapApi: null,
@@ -24,7 +25,8 @@ class Login extends React.Component {
         lat: 52.070499,
         lng: 4.3007
       },
-      zoom: 11
+      zoom: 11,
+      placeName: "" 
     };
   }
   componentWillMount() {
@@ -50,6 +52,7 @@ class Login extends React.Component {
   };
   populateMarker = async(place) => {
     console.log("lat", place.lat, "lng", place.lng)
+   
     var service = new this.state.mapApi.places.PlacesService(this.state.mapInstance);
     const pResult = await service.nearbySearch({
       // location: { lat: place[0].geometry.location.lat(), lng: place[0].geometry.location.lng() },
@@ -57,7 +60,8 @@ class Login extends React.Component {
       radius: 1000,
       type: ['parking']
     }, (results, status) => {
-      console.log(results)
+      console.log("marker pionts",results)
+      let markers =[]
       for (var i = 0; i < results.length; i++) {
         var icon = {
           url: "../assets/menu_icons/google_parking.png", // url
@@ -65,23 +69,62 @@ class Login extends React.Component {
           origin: new this.state.mapApi.Point(0,0), // origin
           anchor: new this.state.mapApi.Point(0, 0) // anchor
       };
-        new this.state.mapApi.Marker({
+       let marker = new this.state.mapApi.Marker({
           map: this.state.mapInstance,
           position: results[i].geometry.location,
           animation: this.state.mapApi.Animation.DROP,
           icon:icon,
           // size: new this.state.mapInstance.Size(20, 32),
           size: new this.state.mapApi.Size(10, 10),
+          markerInfo: results[i],
+          // map: this.state.mapApi
         });
+        marker.addListener('click', (d) => {
+          let markerInfo = marker.markerInfo
+          this.setState({placeName: marker.markerInfo.name})
+         let imageUrl = markerInfo.photos ? markerInfo.photos[0].getUrl() : "";
+          var infowindow = new this.state.mapApi.InfoWindow({
+            content: '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+            '<div id="bodyContent">'+
+            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+            'sandstone rock formation in the southern part of the '+
+            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+            'south west of the nearest large town, Alice Springs; 450&#160;km '+
+            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+            'Aboriginal people of the area. It has many springs, waterholes, '+
+            'rock caves and ancient paintings. Uluru is listed as a World '+
+            'Heritage Site.</p>'+
+            '<p>Attribution: Uluru, <img src= '+imageUrl+'>'+
+            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+            '(last visited June 22, 2009).</p>'+
+            '</div>'+
+            '</div>'
+          });
+          infowindow.open(this.state.mapApi, marker);
+          console.log(marker)
+        }
+        );
+       
+        markers.push(marker)
       }
     });
   }
+
 
   createMapOptions = (maps) => {
     return {
       mapTypeControl: true,
       mapTypeIds: ['roadmap', 'terrain']
     }
+  }
+  closeModal = () => {
+    console.log("click close modal")
+    this.setState({isActiveModal: false})
   }
   render() {
     const {
@@ -109,6 +152,36 @@ class Login extends React.Component {
           />
         </GoogleMapReact>
         {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+        {this.state.isActiveModal && <div className="Modal is-active">
+  <div className="modal-background"></div>
+  <div className="modal-content">
+  <div className="box">
+      <article className="media">
+        <div className="media-left">
+          <figure className="image is-64x64">
+            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"/>
+          </figure>
+        </div>
+        <div className="media-content">
+          <div className="content">
+            <p>
+              <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+              <br/>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+            </p>
+          </div>
+          <nav className="level is-mobile">
+            <div className="level-left">
+             
+                
+            </div>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </div>
+  <button className="modal-close is-large" aria-label="close" onClick={() => this.closeModal()}></button>
+</div>}
       </div>
 
     )
