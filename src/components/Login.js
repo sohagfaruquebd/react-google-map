@@ -4,6 +4,11 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux'
 import SearchBox from './SearchBox';
 import '../style.css'
+import fetch from 'unfetch';
+import axios from "axios"
+let base64 = require('base-64');
+
+
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class Login extends React.Component {
   static defaultProps = {
@@ -59,7 +64,20 @@ class Login extends React.Component {
       location: this.state.center,
       radius: 1000,
       type: ['parking']
-    }, (results, status) => {
+    }, async(results, status) => {
+      results = [...results]
+      console.log("google palce", results)
+      let username = "imentstralliatherederess"
+      let password = "9dea22ce6e159f2f7c9f709e7359660117006e8c"
+      let url = "/newGeoIndex?lat=52.07725093804627&lon=4.345052540302277&radius=200&relation=contains&include_docs=true";
+      var basicAuth = 'Basic ' + btoa(username + ':' + password);
+      console.log(basicAuth)
+
+      let {data} = await axios.get(url, {headers: { 'Authorization': basicAuth}});
+      console.log(data.rows)
+      results.push(data.rows[0])
+      console.log("after push", results)
+      // let ibmPlace = await fetch();
       console.log("marker pionts",results)
       let markers =[]
       for (var i = 0; i < results.length; i++) {
@@ -71,7 +89,8 @@ class Login extends React.Component {
       };
        let marker = new this.state.mapApi.Marker({
           map: this.state.mapInstance,
-          position: results[i].geometry.location,
+          // position: results[i].geometry.location,
+          position: results[i].geometry.coordinates ? results[i].geometry.coordinates  : results[i].geometry.location,
           animation: this.state.mapApi.Animation.DROP,
           icon:icon,
           // size: new this.state.mapInstance.Size(20, 32),
