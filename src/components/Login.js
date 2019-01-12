@@ -80,33 +80,22 @@ class Login extends React.Component {
           // map: this.state.mapApi
         });
         marker.addListener('click', (d) => {
+          
           let markerInfo = marker.markerInfo
           this.setState({placeName: marker.markerInfo.name})
          let imageUrl = markerInfo.photos ? markerInfo.photos[0].getUrl() : "";
+         let openStatus = markerInfo.opening_hours ? markerInfo.opening_hours.open_now ? "Open" : "Gesloten" : ""
           var infowindow = new this.state.mapApi.InfoWindow({
             content: '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
             '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            '<p>Attribution: Uluru, <img src= '+imageUrl+'>'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
+            '<div class="post-container"><div class="post-thumb"><img src="'+imageUrl+' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">'+markerInfo.name+'</h3><h3 class="post-title">'+markerInfo.vicinity+'</h3><h3 class="post-title">Status: '+openStatus+'</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>'+
             '</div>'+
             '</div>'
           });
           infowindow.open(this.state.mapApi, marker);
-          console.log(marker)
+          console.log(markerInfo)
         }
         );
        
