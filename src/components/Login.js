@@ -118,29 +118,29 @@ class Login extends React.Component {
           let markerInfo = marker.markerInfo
           if (markerInfo.doc) {
             console.log(marker)
-          var infowindow = new this.state.mapApi.InfoWindow({
-            content: '<div id="content">' +
-              '<div id="siteNotice">' +
-              '</div>' +
-              '<div id="bodyContent">' +
-              '<div class="post-container"><div class="post-thumb"><img src="' + marker.icon + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">'+ '</h3><h3 class="post-title">' + '</h3><h3 class="post-title">Status: ' + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
-              '</div>' +
-              '</div>'
-          });
+            var infowindow = new this.state.mapApi.InfoWindow({
+              content: '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<div id="bodyContent">' +
+                '<div class="post-container"><div class="post-thumb"><img src="' + marker.icon + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">' + '</h3><h3 class="post-title">' + '</h3><h3 class="post-title">Status: ' + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
+                '</div>' +
+                '</div>'
+            });
           } else {
             let imageUrl = markerInfo.photos ? markerInfo.photos[0].getUrl() : "";
-          let openStatus = markerInfo.opening_hours ? markerInfo.opening_hours.open_now ? "Open" : "Gesloten" : ""
-          var infowindow = new this.state.mapApi.InfoWindow({
-            content: '<div id="content">' +
-              '<div id="siteNotice">' +
-              '</div>' +
-              '<div id="bodyContent">' +
-              '<div class="post-container"><div class="post-thumb"><img src="' + imageUrl + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">' + markerInfo.name + '</h3><h3 class="post-title">' + markerInfo.vicinity + '</h3><h3 class="post-title">Status: ' + openStatus + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
-              '</div>' +
-              '</div>'
-          });
+            let openStatus = markerInfo.opening_hours ? markerInfo.opening_hours.open_now ? "Open" : "Gesloten" : ""
+            var infowindow = new this.state.mapApi.InfoWindow({
+              content: '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<div id="bodyContent">' +
+                '<div class="post-container"><div class="post-thumb"><img src="' + imageUrl + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">' + markerInfo.name + '</h3><h3 class="post-title">' + markerInfo.vicinity + '</h3><h3 class="post-title">Status: ' + openStatus + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
+                '</div>' +
+                '</div>'
+            });
           }
-          
+
           infowindow.open(this.state.mapApi, marker);
           console.log(markerInfo)
         }
@@ -167,30 +167,56 @@ class Login extends React.Component {
       places, mapApiLoaded, mapInstance, mapApi,
     } = this.state;
     return (
-      <div className="map-canvas">
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <span class="navbar-item" href="https://bulma.io">
+          <input class="input" type="text" placeholder="Text input"/>
+          </span>
 
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
 
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: "AIzaSyAyIvCIJ8K57oZ0Hra-TPJWOAP8gjiJ7E8",
-            libraries: ['places', 'geometry'],
-          }}
-          defaultCenter={this.state.center}
-          defaultZoom={this.state.zoom}
-          options={this.createMapOptions()}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
-        >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text={'Kreyser Avrora'}
-          />
-        </GoogleMapReact>
-        {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+           
+            <div class="navbar-item has-dropdown is-hoverable">
+             
+              <div class="navbar-dropdown">
+               
+              </div>
+            </div>
+          </div>
 
-      </div>
-
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+                <a class="button is-light">
+                <img src={require("../assets/menu_icons/valet_parking.png")} />
+          </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
     )
   }
 }
