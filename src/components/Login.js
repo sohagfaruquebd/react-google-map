@@ -16,7 +16,7 @@ class Login extends React.Component {
       lat: 52.070499,
       lng: 4.3007
     },
-    zoom: 11
+    zoom: 25
   };
   constructor(props) {
     super(props);
@@ -69,13 +69,20 @@ class Login extends React.Component {
       console.log("google palce", results)
       let username = "imentstralliatherederess"
       let password = "9dea22ce6e159f2f7c9f709e7359660117006e8c"
-      let url = `/newGeoIndex?lat=${place.lat}&lon=${place.lng}&radius=200&relation=contains&include_docs=true`;
+      let url = `https://smartflowapi.eu-gb.mybluemix.net/device`;
       var basicAuth = 'Basic ' + btoa(username + ':' + password);
       console.log(basicAuth)
-
-      let { data } = await axios.get(url, { headers: { 'Authorization': basicAuth } });
-      console.log(data.rows)
-      await data.rows.map(ibmData => {
+      let bodyRequest = {
+        selector: {
+          "deviceInfo.deviceClass": "DenHaag"
+        }
+      }
+      let { data } = await axios.post(url, {
+        "selector": {
+        "deviceInfo.deviceClass" : "DenHaag" }
+        }, { headers: { 'X-Yazamtec-Client-Id': "8bff1e7f-45e1-48e5-b63d-0b7b2d50a8b3" } });
+      console.log("api data",data.docs)
+      await data.docs.map(ibmData => {
         results.push(ibmData)
       })
 
@@ -91,15 +98,15 @@ class Login extends React.Component {
           origin: new this.state.mapApi.Point(0, 0), // origin
           anchor: new this.state.mapApi.Point(0, 0) // anchor
         };
-        if (results[i].doc) {
-          let type = results[i].doc.metadata.Location_Class
+        if (results[i].deviceInfo) {
+          let type = results[i].metadata.Location_Class
           icon = {
             url: `../assets/marker_icons/an_${type}_green.png`, // url
             scaledSize: new this.state.mapApi.Size(30, 30), // scaled size
             origin: new this.state.mapApi.Point(0, 0), // origin
             anchor: new this.state.mapApi.Point(0, 0) // anchor
           };
-          myLatLng = { lat: results[i].doc.geometry.coordinates[1], lng: results[i].doc.geometry.coordinates[0] };
+          myLatLng = { lat: results[i].geometry.coordinates[1], lng: results[i].geometry.coordinates[0] };
         } else {
           myLatLng = { lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() }
         }
@@ -116,14 +123,14 @@ class Login extends React.Component {
         marker.addListener('click', (d) => {
 
           let markerInfo = marker.markerInfo
-          if (markerInfo.doc) {
+          if (markerInfo.deviceInfo) {
             console.log(marker)
           var infowindow = new this.state.mapApi.InfoWindow({
             content: '<div id="content">' +
               '<div id="siteNotice">' +
               '</div>' +
               '<div id="bodyContent">' +
-              '<div class="post-container"><div class="post-thumb"><img src="' + marker.icon + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">'+ '</h3><h3 class="post-title">' + '</h3><h3 class="post-title">Status: ' + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
+              '<div class="post-container"><div class="post-thumb"><img src="' + marker.icon + ' height="200" width="200" /></div><div class="post-content"><h3 class="post-title">'+ markerInfo.metadata.Street+'</h3><h3 class="post-title">'+ markerInfo.metadata.City+ '</h3><h3 class="post-title">Status: ' + '</h3><h3 class="post-title">Type: Parkerrgarage</h3></div></div><button class="custombutton button5" href="#">Take Me There</button>' +
               '</div>' +
               '</div>'
           });
@@ -153,9 +160,15 @@ class Login extends React.Component {
 
 
   createMapOptions = (maps) => {
+    console.log(this.state, maps)
     return {
       mapTypeControl: true,
-      mapTypeIds: ['roadmap', 'terrain']
+      fullscreenControl: false,
+      mapTypeIds: ['roadmap', 'terrain'],
+      mapTypeControlOptions: {
+        style: this.state.mapApi ? this.state.mapApi.MapTypeControlStyle.DROPDOWN_MENU : null,
+        // position: this.state.mapApi ? this.state.mapApi.ControlPosition.TOP_CENTER : null
+    },
     }
   }
   closeModal = () => {

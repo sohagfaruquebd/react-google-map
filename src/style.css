@@ -1,78 +1,86 @@
-
-  .controls {
-    z-index: 100;
-    margin-top: 16px;
-    border: 1px solid transparent;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    height: 38px;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  }
-  .pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 12rem;
-    position: absolute;
-    top: 3rem;
-    z-index: 1;
-    left: 0%;
-  }
-
-  .pac-input:focus {
-    border-color: #4d90fe;
-  }
-
-  .pac-container {
-    font-family: Roboto;
-  }
-
-  .type-selector {
-    color: #fff;
-    background-color: #4d90fe;
-    padding: 5px 11px 0px 11px;
-  }
-
-  .type-selector label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-  }
-  .map-canvas {
-    height: 100vh;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 0;
-  }
-  .post-container {
-    margin: 20px 20px 0 0;  
-    overflow: auto
+.controls {
+  z-index: 100;
+  margin-top: 16px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 38px;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px
 }
+
+.pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 20rem;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 20rem;
+  position: absolute;
+  top: -.4rem;
+  z-index: 1;
+  left: 0%;
+}
+
+.pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+.type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+.type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.map-canvas {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.post-container {
+  margin: 20px 20px 0 0;
+  overflow: auto
+}
+
 .post-thumb {
-    float: left
+  float: left
 }
+
 .post-thumb img {
-    display: block
+  display: block
 }
+
 .post-content {
-    margin-left: 210px
+  margin-left: 210px
 }
+
 .post-title {
-    font-weight: bold;
-    font-size: 200%
+  font-weight: bold;
+  font-size: 200%
 }
+
 .custombutton {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
+  /* Green */
   border: none;
   color: white;
   padding: 15px 47px;
@@ -84,5 +92,79 @@
   cursor: pointer;
   background-color: #555555
 }
-.button5 {background-color: #555555;} /* Black */
-  
+
+.button5 {
+  background-color: #555555;
+}
+
+/* Black */
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .pac-input {
+    margin-left: 1rem;
+  }
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: .64rem;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 12rem;
+    position: absolute;
+    z-index: 1;
+    left: 8rem;
+  }
+  .controls {
+    z-index: 100;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 43px;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px
+  }
+}
